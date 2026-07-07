@@ -1,11 +1,11 @@
-FROM httpd:2.4
-RUN apt update && apt upgrade -y
-RUN apt install -y nodejs npm
+# Build-Stage
+FROM node:22 AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm i -g @quasar/cli
 RUN npm install
 COPY . .
+RUN npm install -g @quasar/cli
 RUN quasar build
-RUN ls -la ./dist/spa
-RUN cp -r ./dist/spa/* /usr/local/apache2/htdocs/
+# Runtime-Stage
+FROM httpd:latest
+COPY --from=build /app/dist/spa/ /usr/local/apache2/htdocs/
