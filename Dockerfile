@@ -1,5 +1,5 @@
 # Build-Stage
-FROM node:22 AS build
+FROM node:latest AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
