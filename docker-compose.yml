@@ -3,4 +3,4 @@ services:
   nekirtech:
     build: .
     ports:
-      - "80:80"
+      - "${HOST_PORT}:80"
